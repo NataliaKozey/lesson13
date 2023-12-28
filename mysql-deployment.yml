@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simple-db
+  template:
+    metadata:
+      labels:
+        app: simple-db
+    spec:
+      containers:
+        - name: simple-db
+          image: nkorbach/mysql_for_suitecrm
+          ports:
+            - containerPort: 3306
+          envFrom:
+            - secretRef:
+                name: mysql-secrets
